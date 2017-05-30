@@ -17,6 +17,9 @@ var UserSchema = new mongoose.Schema({
 
 UserSchema.plugin(uniqueValidator, {message: 'is already taken.'});
 
+mongoose.model('User', UserSchema);
+
+
 UserSchema.methods.validPassword = function(password) {
   var hash = crypto.pbkdf2Sync(password, this.salt, 10000, 512, 'sha512').toString('hex');
   return this.hash === hash;
@@ -94,4 +97,3 @@ UserSchema.methods.isFollowing = function(id){
   });
 };
 
-mongoose.model('User', UserSchema);
